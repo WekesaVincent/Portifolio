@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:C="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> My Career Portfolio</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+    /* Global Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #fdfefe; /* Light cream background for warmth */
+        margin-top: 70px;
+    }
+
+    /* Navbar */
+    .navbar {
+        background-color: #12495e; /* Dark gray-blue for sophistication */
+        padding: 15px 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar a {
+        color: #fdfefe !important; /* White text for contrast */
+        font-weight: bold;
+    }
+
+    .navbar a:hover {
+        color: #f39c12 !important; /* Vibrant orange for hover effect */
+        text-decoration: underline;
+    }
+
+    .navbar-toggler-icon {
+        background-color: white;
+    }
+
+    /* Header Section */
+    .header-section {
+        text-align: center;
+        padding: 90px 0;
+        background-color: #FCFBF4; /* creame white  for a fresh look */
+        color: darkslategray;
+        font-styldarkslategraye: bold;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-section img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid #fdfefe; /* White border */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-section h1 {
+        font-size: 3em;
+        margin: 20px 0;
+        animation: fadeIn 2s;
+    }
+
+    .header-section p {
+        font-size: 1.2em;
+    }
+
+    .header-section a {
+        color: #f39c12; /* Vibrant orange */
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .header-section a:hover {
+        color: #34495e; /* Dark gray-blue for hover */
+    }
+
+    /* About Section */
+    .about-section {
+        padding: 60px 30px;
+        background-color: #708090; /* light grey for a striking appearance */
+        color: #fdfefe; /* White text for readability */
+    }
+
+    .about-section h2 {
+        font-size: 2.5em;
+        margin-bottom: 30px;
+    }
+
+    .about-section p {
+        font-size: 1.1em;
+    }
+
+    /* Projects Section */
+    .projects-section {
+        padding: 70px 30px;
+        background-color: #FCFBF4; /* Light gray for neutrality */
+    }
+
+    .projects-section h2 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 30px;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .card img:hover {
+        transform: scale(1.05);
+    }
+
+    .card-body {
+        background-color: #f7f9f9; /* Soft white */
+        padding: 25px;
+        text-align: center;
+    }
+
+    .card-body h5 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .card-body .btn {
+        background-color: #12495e; /* Bright blue for buttons */
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-body .btn:hover {
+        background-color: #708090; /* Slightly darker blue on hover */
+    }
+
+    /* Skills Section */
+    .skills-section {
+        background-color: #FCFBF4; /* light gray */
+        padding: 50px 30px;
+        color: #darkslategray; /* White text */
+    }
+
+    .skills-section h2 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 40px;
+    }
+
+    .progress-bar {
+        background-color: #12495e; /* Vibrant red for emphasis */
+    }
+
+    .skill-container {
+        margin-bottom: 20px;
+    }
+
+    /* Contact Section */
+    .contact-section {
+        background-color: #708090; /* Deep navy blue for elegance */
+        color: #fff;
+        padding: 60px 30px;
+        text-align: center;
+    }
+
+    .contact-icon {
+        margin: 15px;
+        width: 50px;
+        height: 50px;
+        color: #12495e;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-icon:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+
+
+    /* Footer Section */
+    footer {
+        background-color: #12495e; /* dark teal  */
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
+
+</head>
+
+<body data-spy="scroll" data-target="#navbarNav" data-offset="70">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Professional Portfolio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">Know Me!</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#skills">Expertise</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://drive.google.com/file/d/1M4ieHOS-ulbLevtBaM1OyrYoikbXr5Y6/view?usp=drive_link">Download</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="header-section">
+    <h1>WEKESA  VINCENT</h1>
+   <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/portfolio.jpg.jpeg" alt="Exploratory Analysis">
+
+
+    <p>Data Analyst | IT Enthusiast</p>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank">Email </a> |
+
+    <a href="https://www.linkedin.com/in/wekesa-vincent-56a761174/" target="_blank">LinkedIn</a> |
+    <a href="https://github.com/WekesaVincent" target="_blank">GitHub</a>
+    
+</div>
+
+</div>
+
+
+    <!-- About Section -->
+    <div id="about" class="about-section">
+        <h2>About Me</h2>
+        <p>I am a dedicated and results-oriented Data Analyst with over 3 years of experience in analyzing, interpreting, and visualizing data to drive informed decision-making. My expertise lies in leveraging tools like R, Python, SQL, and Excel to work with raw datasets, transform them into actionable insights, and support strategic business outcomes. My proficiency in R programming and RStudio allows me to excel in data visualization and advanced statistical analysis. I have worked extensively on data preparation and visualization projects, showcasing my ability to turn complex datasets into meaningful visuals. I also have hands-on experience with the ETL (Extract, Transform, Load) process using SQL, ensuring efficient data integration and management. In addition to my technical expertise, I have a strong foundation in Excel, enabling me to perform detailed analyses and create dynamic dashboards. Driven by curiosity and a passion for solving problems, I thrive on uncovering insights that lead to impactful decision-making. Whether working with raw data or building polished data pipelines, I bring a meticulous and innovative approach to every project.</p>
+    </div>
+
+    <!-- Projects Section -->
+<div id="projects" class="projects-section">
+    <h2>Projects</h2>
+    <div class="row">
+        <!-- Project 1 -->
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/car.jpg" class="card-img-top" alt="Project 1">
+                <div class="card-body">
+                    <h5 class="card-title">Car Price Prediction</h5>
+                    <p class="card-text">Predicting the price of cars based on a wide range of attributes and features.</p>
+                    <a href="https://github.com/WekesaVincent/Projects/blob/main/Car%20Price%20Prediction.ipynb" target="_blank" class="btn btn-primary">Explore Project</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/house.png" class="card-img-top" alt="Project 2">
+                <div class="card-body">
+                    <h5 class="card-title">House Price Prediction</h5>
+                    <p class="card-text">House Price Prediction Model essential for decision making while selecting a house.</p>
+                    <a href="https://github.com/WekesaVincent/Projects/blob/main/House%20Price%20Prediction.ipynb" target="_blank" class="btn btn-primary">Explore Project</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/lung.png" class="card-img-top" alt="Project 3">
+                <div class="card-body">
+                    <h5 class="card-title">Lung Cancer Disease Prediction</h5>
+                    <p class="card-text">Lung cancer prediction using 10 machine learning classification models using Scikit-learn library.</p>
+                    <a href="https://github.com/WekesaVincent/Projects/blob/main/Lung%20Cancer%20Disease%20Prediction.ipynb" target="_blank" class="btn btn-primary">Explore Project</a>
+                </div>
+            </div>
+        </div>
+   
+        <!-- Project 4 -->
+        <div class="col-md-4">
+            <div class="card">
+                
+                <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/social.png" class="card-img-top" alt="Project 4">
+
+                <div class="card-body">
+                    <h5 class="card-title">Sentiment Analysis Social Media</h5>
+                    <p class="card-text">Perform sentiment analysis</p>
+                    <a href="https://github.com/WekesaVincent/Projects/blob/main/Sentiment%20Analysis%20Social%20Media.ipynb" target="_blank" class="btn btn-primary">Explore Project</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/Wasikeonesmus/images/main/images/basket.jpg" class="card-img-top" alt="Project 2 Thumbnail">
+                <div class="card-body">
+                    <h5 class="card-title">Coming Soon</h5>
+                    <p class="card-text">Coming Soon.</p>
+                    <a href="https://github.com/WekesaVincent/Projects/blob/main/House%20Price%20Prediction.ipynb" target="_blank" class="btn btn-primary">Explore Project</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/Wasikeonesmus/images/main/images/stock.png" class="card-img-top" alt="Project 3 Thumbnail">
+                <div class="card-body">
+                    <h5 class="card-title">Coming Soon</h5>
+                    <p class="card-text">Coming Soon</p>
+                    <a href="https://github.com/WekesaVincent/Projects/blob/main/" target="_blank" class="btn btn-primary">Explore Project</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+
+    <!-- Skills Section -->
+    <div id="skills" class="skills-section">
+        <h2>Expertise</h2>
+        <div class="skill-container">
+            <p>Excel</p>
+            <div class="progress">
+                <div class="progress-bar" style="width: 95%"></div>
+            </div>
+        </div>
+        <div class="skill-container">
+            <p>R</p>
+            <div class="progress">
+                <div class="progress-bar" style="width: 90%"></div>
+            </div>
+        </div>
+        <div class="skill-container">
+            <p>Python</p>
+            <div class="progress">
+                <div class="progress-bar" style="width: 75%"></div>
+            </div>
+        </div>
+         <div class="skill-container">
+            <p>ETL</p>
+            <div class="progress">
+                <div class="progress-bar" style="width: 65%"></div>
+            </div>
+        </div>
+        <div class="skill-container">
+            <p>SQL</p>
+            <div class="progress">
+                <div class="progress-bar" style="width: 60%"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+    <div id="contact" class="contact-section">
+    <h2>Contact</h2>
+    <p>"Let’s Connect and Create Something Amazing!"
+I’m always excited to hear from you—whether it’s about a project idea, collaboration, feedback, or just a friendly hello. Don’t hesitate to reach out; I’d love to hear your thoughts and help in any way I can. Together, we can make incredible things happen!
+Feel free to drop me a message anytime. 😊</p>
+        
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank">
+        <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/gmail.png" alt="Gmail Icon" style="width: 32px; height: 32px;margin-right: 20px;"></a>
+
+        <a href="https://www.linkedin.com/in/wekesa-vincent-56a761174/" target="_blank">
+        <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/linkedin.jpeg" alt="LinkedIn Icon" style="width: 32px; height: 32px;margin-right: 20px;"></a>
+
+        <a href="https://github.com/WekesaVincent" target="_blank">
+<img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/github.jpeg" alt="GitHub Icon" style="width: 32px; height: 32px;"></a>
+
+</div>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 WEKECENTA. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
