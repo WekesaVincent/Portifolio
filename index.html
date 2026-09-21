@@ -1,721 +1,640 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:C="http://www.w3.org/1999/xhtml">
-
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vincent W. Wekesa — SOC Analyst | Data Analyst | IT Enthusiast</title>
+  <meta name="description" content="Vincent W. Wekesa | SOC Analyst, Data Analyst & IT Professional based in Nairobi, Kenya." />
+  <title>Vincent W. Wekesa | SOC Analyst | Data Analyst</title>
+
+  <!-- Preconnect for speed -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:#070d14; --bg2:#0c1520; --accent:#00ff9d; --accent2:#00bfff;
-      --danger:#ff3c3c; --text:#c9d8ea; --muted:#5a7a99; --border:#1e3048;
-      --mono:'Share Tech Mono',monospace; --sans:'Space Grotesk',sans-serif; --body:'Inter',sans-serif;
-    }
-    html{scroll-behavior:smooth;}
-    body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.65;overflow-x:hidden;}
-    ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
-    #matrixCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.17;}
-
-    /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2vw 0 3vw;height:64px;background:rgba(7,13,20,0.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
-    .nav-logo{font-family:var(--mono);color:var(--accent);font-size:1rem;text-decoration:none;letter-spacing:0.04em;flex-shrink:0;}
-    .nav-links{display:flex;gap:1.3rem;list-style:none;margin-left:auto;align-items:center;}
-    .nav-links a{font-family:var(--mono);font-size:0.72rem;color:var(--muted);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s;padding:4px 8px;border-radius:3px;}
-    .nav-links a:hover{color:var(--accent);}
-    .nav-links a.active{color:#070d14;background:var(--accent);}
-    .nav-talk{font-family:var(--mono);font-size:0.72rem;font-weight:700;color:#070d14;background:var(--accent);border:none;cursor:pointer;padding:8px 18px;border-radius:4px;text-decoration:none;letter-spacing:0.06em;transition:background 0.2s,color 0.2s,box-shadow 0.2s;margin-left:0.4rem;}
-    .nav-talk:hover{background:#00e88a;box-shadow:0 0 14px rgba(0,255,157,0.4);}
-    .nav-talk.active{background:#005c38;color:var(--accent);box-shadow:0 0 16px rgba(0,255,157,0.5);}
-    @keyframes pulse-border{0%,100%{box-shadow:0 0 0 0 rgba(0,255,157,0.3)}50%{box-shadow:0 0 0 6px rgba(0,255,157,0)}}
-    .menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;border:none;background:none;padding:4px;margin-left:1rem;}
-    .menu-toggle span{display:block;width:22px;height:2px;background:var(--text);border-radius:1px;}
-    @media(max-width:760px){
-      .menu-toggle{display:flex;}
-      .nav-links{display:none;flex-direction:column;gap:0;position:absolute;top:64px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:1rem 5vw;margin-left:0;}
-      .nav-links.open{display:flex;}
-      .nav-links a{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.85rem;}
-      .nav-talk{display:none;}
-    }
-
-    /* HERO */
-    #home{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 5vw 60px;position:relative;overflow:hidden;z-index:1;}
-    .hero-left{max-width:500px;}
-    .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:0.72rem;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(0,255,157,0.35);border-radius:20px;padding:5px 14px 5px 10px;margin-bottom:1.6rem;background:rgba(0,255,157,0.04);}
-    .eyebrow-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse-border 1.5s infinite;flex-shrink:0;}
-    .hero-photo{width:110px;height:110px;border-radius:50%;border:3px solid rgba(0,255,157,0.5);object-fit:cover;margin-bottom:1.4rem;box-shadow:0 0 20px rgba(0,255,157,0.2);}
-    h1{font-family:var(--sans);font-size:clamp(2.4rem,5vw,4.5rem);font-weight:700;line-height:1.06;color:#e8f4ff;letter-spacing:-0.02em;margin-bottom:0.5rem;}
-    h1 span{color:var(--accent);}
-    .hero-role{font-family:var(--mono);font-size:clamp(0.9rem,1.6vw,1.1rem);color:#e8f4ff;margin-bottom:1.4rem;}
-    .hero-role span{color:var(--accent);}
-    .hero-sub{font-size:0.93rem;color:var(--muted);max-width:460px;margin-bottom:2rem;line-height:1.8;}
-    .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.2rem;align-items:center;}
-    .btn-primary{font-family:var(--sans);font-weight:700;font-size:0.88rem;background:var(--accent);color:#070d14;border:none;cursor:pointer;padding:12px 26px;border-radius:4px;text-decoration:none;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;display:inline-block;}
-    .btn-primary:hover{background:#00e88a;transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,255,157,0.35);}
-    .btn-ghost{font-family:var(--mono);font-size:0.76rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:8px;padding:11px 20px;border:1px solid var(--border);border-radius:4px;transition:color 0.2s,border-color 0.2s;}
-    .btn-ghost:hover{color:var(--accent2);border-color:var(--accent2);}
-    .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem;}
-    .hero-badge{font-family:var(--mono);font-size:0.65rem;color:var(--accent2);background:rgba(0,191,255,0.07);border:1px solid rgba(0,191,255,0.22);padding:4px 12px;border-radius:2px;letter-spacing:0.06em;}
-    .hero-socials{display:flex;gap:8px;}
-    .hero-socials a{display:flex;align-items:center;justify-content:center;width:36px;height:36px;color:var(--muted);border:1px solid var(--border);border-radius:4px;transition:color 0.2s,border-color 0.2s,background 0.2s;text-decoration:none;}
-    .hero-socials a:hover{color:var(--accent);border-color:var(--accent);background:rgba(0,255,157,0.06);}
-    .hero-socials a svg{width:15px;height:15px;fill:currentColor;}
-
-    /* HERO RIGHT */
-    .hero-right{position:absolute;top:72px;right:2vw;width:460px;display:none;flex-direction:column;gap:18px;z-index:10;}
-    @media(min-width:1000px){.hero-right{display:flex;}}
-    .terminal{background:rgba(8,16,28,0.94);border:1px solid rgba(0,255,157,0.28);border-radius:8px;width:100%;overflow:hidden;box-shadow:0 4px 40px rgba(0,255,157,0.07);font-family:var(--mono);font-size:0.72rem;color:var(--accent);}
-    .terminal-titlebar{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(0,255,157,0.12);padding:9px 13px;}
-    .t-dot{width:10px;height:10px;border-radius:50%;} .t-red{background:#ff5f57;} .t-yellow{background:#febc2e;} .t-green{background:#28c840;}
-    .terminal-title{font-size:0.66rem;color:var(--muted);margin-left:5px;letter-spacing:0.08em;}
-    .terminal-body{padding:12px 15px;min-height:195px;max-height:240px;overflow:hidden;}
-    .term-line{margin-bottom:2px;line-height:1.5;opacity:0;transform:translateY(3px);transition:opacity 0.3s,transform 0.3s;}
-    .term-line.show{opacity:1;transform:translateY(0);}
-    .term-line.cmd{color:#e8f4ff;} .term-line.cmd .prompt{color:var(--accent);}
-    .term-line.info{color:var(--muted);} .term-line.ok{color:var(--accent);font-weight:bold;}
-    .term-line.warn{color:#ffcc00;} .term-line.err{color:var(--danger);} .term-line.dim{color:#1e3048;}
-    .blink{animation:blink 1s steps(1) infinite;}
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-    .radar-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;}
-    #radarCanvas{display:block;}
-    .radar-label{font-family:var(--mono);font-size:0.68rem;color:var(--accent);letter-spacing:0.15em;opacity:0.7;}
-    #heroCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
-
-    /* SECTIONS */
-    section{padding:100px 5vw;position:relative;z-index:1;}
-    .section-label{font-family:var(--mono);font-size:0.72rem;color:var(--accent);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.8rem;}
-    h2{font-family:var(--sans);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;color:#e8f4ff;line-height:1.15;letter-spacing:-0.02em;margin-bottom:2.5rem;}
-    h2 em{font-style:normal;color:var(--accent);}
-
-    /* ABOUT */
-    #about{background:rgba(12,21,32,0.96);backdrop-filter:blur(6px);}
-    .about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:4rem;align-items:start;}
-    @media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:3rem;}}
-    .about-img-wrap{position:relative;}
-    .about-img-wrap img{width:100%;border-radius:10px;display:block;border:1px solid var(--border);}
-    .about-img-badge{position:absolute;bottom:-16px;right:-16px;background:var(--accent);color:#070d14;font-family:var(--mono);font-size:0.7rem;font-weight:700;padding:8px 14px;border-radius:2px;letter-spacing:0.1em;}
-
-    /* cert + lang cards */
-    .about-side-cards{display:flex;flex-direction:column;gap:12px;margin-top:2.5rem;}
-    .side-card{background:rgba(0,255,157,0.04);border:1px solid rgba(0,255,157,0.15);border-radius:6px;padding:12px 16px;}
-    .side-card-label{font-family:var(--mono);font-size:0.62rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;}
-    .side-card-val{font-family:var(--mono);font-size:0.78rem;color:var(--accent);}
-
-    .about-text p{color:var(--muted);margin-bottom:1.1rem;line-height:1.8;font-size:0.94rem;}
-    .skill-chips{display:flex;flex-wrap:wrap;gap:8px;margin:1.4rem 0 2rem;}
-    .chip{font-family:var(--mono);font-size:0.68rem;color:var(--accent2);background:rgba(0,191,255,0.07);border:1px solid rgba(0,191,255,0.2);padding:4px 11px;border-radius:2px;letter-spacing:0.05em;}
-
-    /* EXPERIENCE */
-    #experience{background:rgba(7,13,20,0.97);}
-    .timeline{position:relative;padding-left:2rem;}
-    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:rgba(0,255,157,0.2);}
-    .timeline-item{position:relative;padding:0 0 2.8rem 2rem;}
-    .timeline-item::before{content:'';position:absolute;left:-5.5px;top:6px;width:10px;height:10px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);}
-    .timeline-item:last-child{padding-bottom:0;}
-    .tl-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px;}
-    .tl-company{font-family:var(--mono);font-size:0.68rem;color:rgba(0,255,157,0.6);letter-spacing:0.08em;}
-    .tl-date{font-family:var(--mono);font-size:0.64rem;color:var(--muted);}
-    .tl-role{font-family:var(--sans);font-size:1.05rem;font-weight:600;color:#e0f0ff;margin-bottom:6px;}
-    .tl-bullets{list-style:none;padding:0;}
-    .tl-bullets li{font-size:0.84rem;color:var(--muted);line-height:1.7;padding-left:1.1rem;position:relative;margin-bottom:3px;}
-    .tl-bullets li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:0.7rem;top:2px;}
-
-    /* PROJECTS */
-    #projects{background:rgba(12,21,32,0.96);}
-    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;}
-    @media(max-width:900px){.projects-grid{grid-template-columns:repeat(2,1fr);}}
-    @media(max-width:560px){.projects-grid{grid-template-columns:1fr;}}
-    .project-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.25s,transform 0.2s,box-shadow 0.25s;display:flex;flex-direction:column;}
-    .project-card:hover{border-color:rgba(0,255,157,0.35);transform:translateY(-5px);box-shadow:0 8px 30px rgba(0,255,157,0.08);}
-    .project-card img{width:100%;height:180px;object-fit:cover;display:block;transition:transform 0.35s;}
-    .project-card:hover img{transform:scale(1.04);}
-    .project-body{padding:1.4rem;flex:1;display:flex;flex-direction:column;}
-    .project-tag{font-family:var(--mono);font-size:0.6rem;color:var(--accent);background:rgba(0,255,157,0.08);border:1px solid rgba(0,255,157,0.18);padding:2px 8px;border-radius:2px;display:inline-block;margin-bottom:8px;}
-    .project-title{font-family:var(--sans);font-size:0.98rem;font-weight:600;color:#e8f4ff;margin-bottom:0.5rem;}
-    .project-desc{font-size:0.82rem;color:var(--muted);line-height:1.7;flex:1;margin-bottom:1.1rem;}
-    .project-btn{font-family:var(--mono);font-size:0.7rem;color:var(--accent);border:1px solid rgba(0,255,157,0.3);border-radius:4px;padding:8px 16px;text-decoration:none;text-align:center;transition:background 0.2s,color 0.2s;letter-spacing:0.06em;display:inline-block;}
-    .project-btn:hover{background:var(--accent);color:#070d14;}
-
-    /* CYBER BG */
-    #cyberBg{position:relative;background:linear-gradient(160deg,#061626 0%,#071e3a 28%,#0a1f3c 50%,#07111f 75%,#040c18 100%);overflow:hidden;}
-    #cyberBg .lock-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(520px,70vw);opacity:0.07;pointer-events:none;z-index:0;filter:blur(1px);}
-    #cyberBg::before{content:'';position:absolute;top:0;left:-10%;width:60%;height:55%;background:radial-gradient(ellipse,rgba(0,200,180,0.12) 0%,transparent 70%);pointer-events:none;z-index:0;}
-    #cyberBg::after{content:'';position:absolute;bottom:0;right:-5%;width:50%;height:50%;background:radial-gradient(ellipse,rgba(0,100,220,0.09) 0%,transparent 70%);pointer-events:none;z-index:0;}
-    .red-accent-line{position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 0%,#cc1a1a 20%,#ff2a2a 50%,#cc1a1a 80%,transparent 100%);z-index:2;}
-    #binaryCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.22;}
-    #cyberBg > section, #cyberBg > footer{position:relative;z-index:1;}
-
-    /* STATS */
-    #stats{background:transparent;padding-bottom:80px;}
-    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-    @media(max-width:700px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
-    .stat-cell{background:rgba(8,20,38,0.82);border:1px solid rgba(0,255,157,0.12);border-radius:10px;padding:2.2rem 1.6rem;text-align:center;backdrop-filter:blur(8px);box-shadow:0 4px 30px rgba(0,0,0,0.4);transition:border-color 0.3s,transform 0.2s;}
-    .stat-cell:hover{border-color:rgba(0,255,157,0.35);transform:translateY(-4px);}
-    .stat-num{font-family:var(--sans);font-size:2.6rem;font-weight:700;color:var(--accent);line-height:1;margin-bottom:0.5rem;text-shadow:0 0 20px rgba(0,255,157,0.4);}
-    .stat-label{font-family:var(--body);font-size:0.78rem;color:#8fafc8;}
-
-    /* SKILLS */
-    #skills{background:transparent;}
-    .skills-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
-    @media(max-width:700px){.skills-wrapper{grid-template-columns:1fr;}}
-    .skills-col-title{font-family:var(--mono);font-size:0.72rem;color:var(--accent2);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:1.4rem;border-bottom:1px solid rgba(0,191,255,0.15);padding-bottom:8px;}
-    .skills-list{display:flex;flex-direction:column;gap:1.2rem;}
-    .skill-meta{display:flex;justify-content:space-between;margin-bottom:5px;}
-    .skill-name{font-family:var(--mono);font-size:0.76rem;color:#c5dff5;letter-spacing:0.04em;}
-    .skill-pct{font-family:var(--mono);font-size:0.7rem;color:var(--accent);}
-    .skill-bar{height:5px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
-    .skill-fill{height:100%;border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
-
-    /* CERTIFICATIONS */
-    #certifications{background:rgba(12,21,32,0.96);}
-    .certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-    @media(max-width:900px){.certs-grid{grid-template-columns:repeat(2,1fr);}}
-    @media(max-width:560px){.certs-grid{grid-template-columns:1fr;}}
-    .cert-card{background:rgba(8,20,38,0.8);border:1px solid rgba(0,255,157,0.12);border-radius:8px;padding:1.6rem;transition:border-color 0.25s,transform 0.2s;position:relative;overflow:hidden;}
-    .cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
-    .cert-card:hover{border-color:rgba(0,255,157,0.3);transform:translateY(-3px);}
-    .cert-card:hover::before{transform:scaleX(1);}
-    .cert-icon{font-size:1.6rem;margin-bottom:0.8rem;}
-    .cert-name{font-family:var(--sans);font-size:0.92rem;font-weight:600;color:#e0f0ff;margin-bottom:4px;}
-    .cert-issuer{font-family:var(--mono);font-size:0.65rem;color:rgba(0,255,157,0.6);letter-spacing:0.06em;}
-
-    /* EDUCATION */
-    #education{background:transparent;}
-    .edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-    @media(max-width:900px){.edu-grid{grid-template-columns:repeat(2,1fr);}}
-    @media(max-width:560px){.edu-grid{grid-template-columns:1fr;}}
-    .edu-card{background:rgba(8,20,38,0.8);border:1px solid rgba(0,191,255,0.12);border-radius:8px;padding:1.6rem;transition:border-color 0.25s,transform 0.2s;}
-    .edu-card:hover{border-color:rgba(0,191,255,0.3);transform:translateY(-3px);}
-    .edu-icon{font-size:1.5rem;margin-bottom:0.8rem;}
-    .edu-degree{font-family:var(--sans);font-size:0.92rem;font-weight:600;color:#e0f0ff;margin-bottom:4px;}
-    .edu-school{font-family:var(--mono);font-size:0.66rem;color:rgba(0,191,255,0.65);letter-spacing:0.06em;margin-bottom:3px;}
-    .edu-year{font-family:var(--mono);font-size:0.62rem;color:var(--muted);}
-
-    /* CONTACT */
-    #contact{background:rgba(12,21,32,0.96);}
-    .contact-inner{max-width:640px;}
-    .contact-email{font-family:var(--mono);font-size:1.05rem;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px;transition:border-color 0.2s;display:inline-block;margin-bottom:2rem;}
-    .contact-email:hover{border-color:var(--accent);}
-    .contact-socials{display:flex;gap:1rem;flex-wrap:wrap;}
-    .contact-socials a{font-family:var(--mono);font-size:0.7rem;color:#6a8faa;text-decoration:none;letter-spacing:0.08em;padding:8px 16px;border:1px solid rgba(0,255,157,0.15);border-radius:3px;transition:color 0.2s,border-color 0.2s;display:flex;align-items:center;gap:8px;}
-    .contact-socials a:hover{color:var(--accent);border-color:var(--accent);}
-    .contact-socials a svg{width:14px;height:14px;fill:currentColor;flex-shrink:0;}
-
-    /* FOOTER */
-    footer{background:rgba(4,10,20,0.85);border-top:1px solid rgba(0,255,157,0.1);padding:2rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-    .footer-brand{font-family:var(--mono);font-size:0.8rem;color:#4a6a88;}
-    .footer-brand span{color:var(--accent);}
-    .footer-copy{font-family:var(--mono);font-size:0.72rem;color:#4a6a88;}
-  </style>
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+  <link rel="apple-touch-icon" href="images/favicon.png" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<canvas id="matrixCanvas"></canvas>
-
-<!-- NAV -->
-<nav>
-  <a href="#home" class="nav-logo">wekecenta™</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#about"          class="nav-link">About</a></li>
-    <li><a href="#experience"     class="nav-link">Experience</a></li>
-    <li><a href="#projects"       class="nav-link">Projects</a></li>
-    <li><a href="#skills"         class="nav-link">Skills</a></li>
-    <li><a href="#certifications" class="nav-link">Certifications</a></li>
-    <li><a href="#contact"        class="nav-talk" id="navTalk">Let's Talk</a></li>
-  </ul>
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-</nav>
-
-<!-- HERO -->
-<section id="home">
-  <canvas id="heroCanvas"></canvas>
-  <div class="hero-left">
-    <div class="hero-eyebrow">
-      <span class="eyebrow-dot"></span>
-      Open to opportunities &nbsp;·&nbsp; SOC · Data · AI
-    </div>
-    <img class="hero-photo"
-      src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/portfolio.jpg.jpeg"
-      alt="Vincent W. Wekesa"
-      onerror="this.style.display='none'"/>
-    <h1>Hi, I'm <span>Vincent<br>W. Wekesa</span></h1>
-    <div class="hero-role">Aspiring <span>SOC Analyst</span> | Data Analyst | IT Pro</div>
-    <p class="hero-sub">
-      IT and Data Analyst transitioning into Cybersecurity — building expertise in
-      Security Operations, SIEM, threat detection, incident response, and data analytics
-      from Nairobi, Kenya.
-    </p>
-    <div class="hero-badges">
-      <span class="hero-badge">🛡️ CompTIA CySA+</span>
-      <span class="hero-badge">📊 BSc. Applied Computer Science</span>
-      <span class="hero-badge">🔐 AfricaHackon Cybersecurity</span>
-      <span class="hero-badge">🌍 Nairobi, Kenya</span>
-    </div>
-    <div class="hero-ctas">
-      <a href="#projects" class="btn-primary">View My Work</a>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" class="btn-ghost">
-        <svg viewBox="0 0 20 20" width="13" fill="currentColor"><path d="M2 4a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L10 9l6-4.99V4H4zm0 2.236V16h12V6.236l-6 4.99-6-4.99z"/></svg>
-        wekecenta@gmail.com
-      </a>
-    </div>
-    <div class="hero-socials">
-      <a href="https://www.linkedin.com/in/vincent-wwekesa-56a761174" target="_blank" title="LinkedIn">
-        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      </a>
-      <a href="https://github.com/WekesaVincent" target="_blank" title="GitHub">
-        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-      </a>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" title="Gmail">
-        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.64l8.073-6.147C21.69 2.28 24 3.434 24 5.457z"/></svg>
-      </a>
-    </div>
-  </div>
-
-  <!-- RIGHT: terminal + radar -->
-  <div class="hero-right">
-    <div class="terminal">
-      <div class="terminal-titlebar">
-        <div class="t-dot t-red"></div><div class="t-dot t-yellow"></div><div class="t-dot t-green"></div>
-        <span class="terminal-title">wekecenta@soc-analyst ~ pipeline</span>
-      </div>
-      <div class="terminal-body" id="termBody"></div>
-    </div>
-    <div class="radar-wrap">
-      <canvas id="radarCanvas" width="200" height="200"></canvas>
-      <div class="radar-label">Monitoring threats...</div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-grid">
-    <div>
-      <div class="about-img-wrap">
-        <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/portfolio.jpg.jpeg"
-             alt="Vincent W. Wekesa"
-             onerror="this.style.background='#111c2a';this.style.minHeight='340px'"/>
-        <div class="about-img-badge">🔐 SOC · DATA · AI</div>
-      </div>
-      <div class="about-side-cards">
-        <div class="side-card">
-          <div class="side-card-label">🎓 Certification</div>
-          <div class="side-card-val">CompTIA CySA+ CS0-003</div>
-        </div>
-        <div class="side-card">
-          <div class="side-card-label">🌐 Languages</div>
-          <div class="side-card-val">Swahili · English</div>
-        </div>
-        <div class="side-card">
-          <div class="side-card-label">📍 Location</div>
-          <div class="side-card-val">Nairobi County, Kenya</div>
-        </div>
-        <div class="side-card">
-          <div class="side-card-label">🏆 Award</div>
-          <div class="side-card-val">BSc. Applied Computer Science</div>
-        </div>
-      </div>
-    </div>
-    <div class="about-text">
-      <div class="section-label">About Me</div>
-      <h2>Data-Driven.<br><em>Security-Focused.</em></h2>
-      <p>I am an <strong style="color:#e8f4ff">IT and Data Analyst transitioning into Cybersecurity</strong>, with a strong foundation in data analytics, information systems, database technologies, and security principles.</p>
-      <p>Over the past several years I have developed practical experience through technical projects, research activities, and graduate-level coursework in <strong style="color:#e8f4ff">Data Science, Artificial Intelligence, Information Systems Security, and Software Development</strong>.</p>
-      <p>My cybersecurity knowledge spans <strong style="color:#e8f4ff">security operations, information assurance, risk management, network security, compliance, incident response fundamentals, access control, and security monitoring</strong>. I am continuously building skills toward a career in SOC analysis, threat detection, and cybersecurity.</p>
-      <p>I am passionate about using data, technology, and security practices to help organisations <strong style="color:#e8f4ff">protect information, improve processes, and make informed decisions</strong>.</p>
-      <div class="skill-chips">
-        <span class="chip">SOC Analysis</span><span class="chip">SIEM & Monitoring</span>
-        <span class="chip">Incident Response</span><span class="chip">Threat Detection</span>
-        <span class="chip">Python</span><span class="chip">R / RStudio</span>
-        <span class="chip">SQL</span><span class="chip">Excel</span>
-        <span class="chip">ETL</span><span class="chip">Machine Learning</span>
-        <span class="chip">Data Visualisation</span><span class="chip">Network Security</span>
-        <span class="chip">Risk Management</span><span class="chip">Cloud Security</span>
-      </div>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" class="btn-primary">Work With Me</a>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-label">Career</div>
-  <h2>Professional <em>Experience</em></h2>
-  <div class="timeline">
-
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <span class="tl-company">Freelance / Self-Employed · Remote, Kenya</span>
-        <span class="tl-date">Oct 2020 – Jan 2026 · 5 yrs 4 mos</span>
-      </div>
-      <div class="tl-role">Freelance Data Analyst / IT Analyst</div>
-      <ul class="tl-bullets">
-        <li>Analysed, processed, and transformed datasets to generate actionable insights using Python, SQL, Excel, and statistical techniques.</li>
-        <li>Performed data cleaning, validation, statistical analysis, visualisation, and reporting to improve data quality and communicate findings.</li>
-        <li>Designed and optimised database systems including SQL development, data management, and information security concepts.</li>
-        <li>Applied cybersecurity principles through security-focused projects: risk management, security monitoring, access control, and threat awareness.</li>
-        <li>Developed technical projects across Data Science, AI, Flutter mobile apps, and cybersecurity defence.</li>
-        <li>Completed graduate-level research in ML, data analytics, cloud technologies, and cyber defence principles.</li>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#home" class="nav__logo">wekecenta<span>™</span></a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#contact" class="nav__cta">Let's Talk</a></li>
       </ul>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </nav>
 
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <span class="tl-company">Kenya National Bureau of Statistics (KNBS) · Kenya</span>
-        <span class="tl-date">Aug 2019 · 1 month</span>
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <!-- Layered backgrounds -->
+    <div class="hero__bg">
+      <canvas id="matrix-canvas"></canvas>
+    </div>
+    <canvas id="particle-canvas" class="particle-canvas"></canvas>
+    <div class="hero__hex-grid"></div>
+    <div class="hero__scan-line"></div>
+
+    <div class="hero__layout">
+      <!-- Left: main content -->
+      <div class="hero__content">
+        <p class="hero__tag">
+          <span class="tag-dot"></span> Open to opportunities
+          <span class="tag-threat">THREAT LVL: <span class="threat-val" id="threat-level">HIGH</span></span>
+        </p>
+        <h1 class="hero__title glitch" data-text="Vincent W. Wekesa">
+          Hi, I'm <span class="accent">Vincent W. Wekesa</span>
+        </h1>
+        <div class="hero__roles">
+          <span class="role-prefix">I'm a </span>
+          <span class="typed" id="typed-text"></span><span class="cursor">|</span>
+        </div>
+        <p class="hero__sub">
+          IT and Data Analyst transitioning into Cybersecurity, building expertise in
+          Security Operations (SOC), SIEM engineering, threat detection, incident response,
+          and data analytics from Nairobi, Kenya.
+        </p>
+        <div class="hero__actions">
+          <a href="#projects" class="btn btn--primary">View Projects</a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" rel="noopener" class="btn btn--ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span>wekecenta@gmail.com</span>
+          </a>
+        </div>
+        <div class="hero__socials">
+          <a href="https://www.linkedin.com/in/vincent-wwekesa-56a761174" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://github.com/WekesaVincent" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" rel="noopener" aria-label="Gmail">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.64l8.073-6.147C21.69 2.28 24 3.434 24 5.457z"/></svg>
+          </a>
+        </div>
       </div>
-      <div class="tl-role">Census Enumerator</div>
-      <ul class="tl-bullets">
-        <li>Conducted household visits and collected demographic data using structured questionnaires and digital collection methods.</li>
-        <li>Verified records, performed data quality checks, and ensured accuracy, completeness, and consistency of submissions.</li>
-        <li>Maintained confidentiality while handling sensitive personal information in the field.</li>
-        <li>Developed practical skills in data collection, validation, quality assurance, and information management.</li>
-      </ul>
-    </div>
 
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <span class="tl-company">Trans Nzoia County Assembly · Kitale, Kenya</span>
-        <span class="tl-date">May 2018 – Sep 2018 · 5 months</span>
-      </div>
-      <div class="tl-role">Information Technology Support Technician</div>
-      <ul class="tl-bullets">
-        <li>Provided first-line technical support for desktops, laptops, printers, and peripherals.</li>
-        <li>Installed, configured, and maintained Windows and Linux operating systems.</li>
-        <li>Supported LAN/WAN network connectivity and resolved TCP/IP issues.</li>
-        <li>Performed hardware diagnostics, software installation, updates, and preventive maintenance.</li>
-        <li>Built a strong foundation in IT support, systems administration, networking, and information security best practices.</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label">Portfolio</div>
-  <h2>My <em>Projects</em></h2>
-  <div class="projects-grid">
-
-    <div class="project-card">
-      <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/car.jpg" alt="Car Price Prediction" onerror="this.style.background='#0c1520';this.style.minHeight='180px'"/>
-      <div class="project-body">
-        <span class="project-tag">ML · Regression</span>
-        <div class="project-title">Car Price Prediction</div>
-        <div class="project-desc">Predicting car prices based on a wide range of attributes using regression models and feature engineering techniques.</div>
-        <a href="https://github.com/WekesaVincent/Projects/blob/main/Car%20Price%20Prediction.ipynb" target="_blank" class="project-btn">Explore Project →</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/house.png" alt="House Price Prediction" onerror="this.style.background='#0c1520';this.style.minHeight='180px'"/>
-      <div class="project-body">
-        <span class="project-tag">ML · Regression</span>
-        <div class="project-title">House Price Prediction</div>
-        <div class="project-desc">A house price prediction model for informed real-estate decision-making, built with regression and advanced feature selection.</div>
-        <a href="https://github.com/WekesaVincent/Projects/blob/main/House%20Price%20Prediction.ipynb" target="_blank" class="project-btn">Explore Project →</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/lung.png" alt="Lung Cancer Prediction" onerror="this.style.background='#0c1520';this.style.minHeight='180px'"/>
-      <div class="project-body">
-        <span class="project-tag">ML · Classification</span>
-        <div class="project-title">Lung Cancer Disease Prediction</div>
-        <div class="project-desc">10 machine learning classification models compared using Scikit-learn to identify the best predictor for lung cancer diagnosis.</div>
-        <a href="https://github.com/WekesaVincent/Projects/blob/main/Lung%20Cancer%20Disease%20Prediction.ipynb" target="_blank" class="project-btn">Explore Project →</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/social.png" alt="Sentiment Analysis" onerror="this.style.background='#0c1520';this.style.minHeight='180px'"/>
-      <div class="project-body">
-        <span class="project-tag">NLP · Sentiment</span>
-        <div class="project-title">Sentiment Analysis — Social Media</div>
-        <div class="project-desc">Analysing user emotions across social platforms — hashtag trends, likes, sentiment scoring, and their impact on engagement.</div>
-        <a href="https://github.com/WekesaVincent/Projects/blob/main/Sentiment%20Analysis%20Social%20Media.ipynb" target="_blank" class="project-btn">Explore Project →</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <img src="https://raw.githubusercontent.com/WekesaVincent/Mages/main/bank.jpg" alt="Bank Customer Segmentation" onerror="this.style.background='#0c1520';this.style.minHeight='180px'"/>
-      <div class="project-body">
-        <span class="project-tag">ML · Clustering</span>
-        <div class="project-title">Bank Customer Segmentation</div>
-        <div class="project-desc">Classifying bank customers using KMeans and Affinity Propagation clustering for targeted marketing and product strategies.</div>
-        <a href="https://github.com/WekesaVincent/Projects/blob/main/BankCustomerSegmentation.ipynb" target="_blank" class="project-btn">Explore Project →</a>
+      <!-- Right: animated terminal -->
+      <div class="hero__terminal" aria-hidden="true">
+        <div class="terminal">
+          <div class="terminal__bar">
+            <span class="t-dot t-red"></span>
+            <span class="t-dot t-yellow"></span>
+            <span class="t-dot t-green"></span>
+            <span class="terminal__title">wekecenta@soc-pipeline ~ logs</span>
+          </div>
+          <div class="terminal__body" id="terminal-body"></div>
+        </div>
+        <!-- Radar beneath terminal -->
+        <div class="radar-wrap">
+          <div class="radar">
+            <div class="radar__ring r1"></div>
+            <div class="radar__ring r2"></div>
+            <div class="radar__ring r3"></div>
+            <div class="radar__sweep"></div>
+            <div class="radar__dot" style="top:32%;left:56%"></div>
+            <div class="radar__dot" style="top:52%;left:38%"></div>
+            <div class="radar__dot" style="top:68%;left:64%"></div>
+            <div class="radar__dot" style="top:22%;left:44%"></div>
+            <div class="radar__crosshair-h"></div>
+            <div class="radar__crosshair-v"></div>
+          </div>
+          <p class="radar__label">Monitoring threats &amp; telemetry...</p>
+        </div>
       </div>
     </div>
 
-    <div class="project-card" style="border:1px dashed rgba(0,255,157,0.15);justify-content:center;align-items:center;min-height:280px;">
-      <div class="project-body" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;">
-        <div style="font-size:2rem;margin-bottom:1rem;">🔐</div>
-        <div class="project-title" style="color:var(--muted)">SOC / Security Project</div>
-        <div class="project-desc" style="text-align:center">Cybersecurity project in progress — stay tuned.</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CYBER BG WRAPPER -->
-<div id="cyberBg">
-  <canvas id="binaryCanvas"></canvas>
-  <svg class="lock-bg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="20" y="100" width="160" height="130" rx="14" fill="none" stroke="#00ffb0" stroke-width="6"/>
-    <path d="M60 100V72C60 44 140 44 140 72V100" stroke="#00ffb0" stroke-width="6" stroke-linecap="round"/>
-    <circle cx="100" cy="158" r="18" fill="none" stroke="#00ffb0" stroke-width="5"/>
-    <line x1="100" y1="176" x2="100" y2="196" stroke="#00ffb0" stroke-width="5" stroke-linecap="round"/>
-  </svg>
-  <div class="red-accent-line" style="top:0;bottom:auto;"></div>
-
-<!-- STATS -->
-<section id="stats">
-  <div class="section-label">By the Numbers</div>
-  <h2>Track <em>Record</em></h2>
-  <div class="stats-grid">
-    <div class="stat-cell"><div class="stat-num" data-target="5">0</div><div class="stat-label">Years of Experience</div></div>
-    <div class="stat-cell"><div class="stat-num" data-target="5">0</div><div class="stat-label">ML Projects Completed</div></div>
-    <div class="stat-cell"><div class="stat-num" data-target="10">0</div><div class="stat-label">ML Models Deployed</div></div>
-    <div class="stat-cell"><div class="stat-num" data-target="3">0</div><div class="stat-label">Roles Held</div></div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-label">Expertise</div>
-  <h2>Core <em>Skills</em></h2>
-  <div class="skills-wrapper">
-    <div>
-      <div class="skills-col-title">📊 Data & Analytics</div>
-      <div class="skills-list">
-        <div><div class="skill-meta"><span class="skill-name">Excel</span><span class="skill-pct">95%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="95" style="background:linear-gradient(90deg,#4caf50,#00ff9d)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">R / RStudio</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="90" style="background:linear-gradient(90deg,#2196f3,#00bfff)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">Data Visualisation</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="88" style="background:linear-gradient(90deg,#00ff9d,#4caf50)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">Python</span><span class="skill-pct">75%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="75" style="background:linear-gradient(90deg,#ff9800,#ffcc00)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">Machine Learning</span><span class="skill-pct">72%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="72" style="background:linear-gradient(90deg,#00bfff,#00ff9d)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">SQL / ETL</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="65" style="background:linear-gradient(90deg,#9c27b0,#e040fb)"></div></div></div>
-      </div>
-    </div>
-    <div>
-      <div class="skills-col-title">🔐 Cybersecurity</div>
-      <div class="skills-list">
-        <div><div class="skill-meta"><span class="skill-name">Threat Detection</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="70" style="background:linear-gradient(90deg,#ff3c3c,#ff6b6b)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">Incident Response</span><span class="skill-pct">68%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="68" style="background:linear-gradient(90deg,#f44336,#ff9800)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">SIEM & Monitoring</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="65" style="background:linear-gradient(90deg,#00bfff,#2196f3)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">Network Security</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="65" style="background:linear-gradient(90deg,#4caf50,#00bfff)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">Risk Management</span><span class="skill-pct">62%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="62" style="background:linear-gradient(90deg,#9c27b0,#00bfff)"></div></div></div>
-        <div><div class="skill-meta"><span class="skill-name">Access Control & IAM</span><span class="skill-pct">60%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="60" style="background:linear-gradient(90deg,#ff9800,#ffcc00)"></div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications">
-  <div class="section-label">Credentials</div>
-  <h2>Certifications &amp; <em>Education</em></h2>
-  <div class="certs-grid" style="margin-bottom:3rem;">
-    <div class="cert-card">
-      <div class="cert-icon">🛡️</div>
-      <div class="cert-name">CompTIA CySA+ CS0-003 — Unit 1</div>
-      <div class="cert-issuer">CompTIA · Cybersecurity Analyst</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">🔐</div>
-      <div class="cert-name">Cybersecurity Fundamentals & Advanced Techniques</div>
-      <div class="cert-issuer">AfricaHackon · Feb 2026 – Aug 2026</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">📊</div>
-      <div class="cert-name">Data Management & Information Sciences</div>
-      <div class="cert-issuer">Ajira.com · Computer Sciences Support</div>
-    </div>
-  </div>
-
-  <div class="edu-grid">
-    <div class="edu-card">
-      <div class="edu-icon">🎓</div>
-      <div class="edu-degree">BSc. Applied Computer Science</div>
-      <div class="edu-school">Kisii University, Kenya</div>
-      <div class="edu-year">2015 – 2019</div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-icon">🌍</div>
-      <div class="edu-degree">Cybersecurity: Fundamentals & Advanced</div>
-      <div class="edu-school">AfricaHackon — Nurturing Cybersecurity Excellence in Africa</div>
-      <div class="edu-year">Feb 2026 – Aug 2026 (In Progress)</div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-icon">📈</div>
-      <div class="edu-degree">Data Management & Computer Sciences</div>
-      <div class="edu-school">Ajira.com — Digital Skills Platform</div>
-      <div class="edu-year">Completed</div>
-    </div>
-  </div>
-</section>
-
-<!-- EDUCATION nav anchor -->
-<section id="education" style="padding:0;display:none;"></section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="section-label">Get in Touch</div>
-    <h2>Let's Connect &amp;<br><em>Create Something Amazing</em></h2>
-    <p style="color:#6a8faa;margin-bottom:2rem;max-width:500px;line-height:1.8;">
-      I'm always excited to hear from you — whether it's a project idea, collaboration,
-      SOC opportunity, feedback, or just a friendly hello. Drop me a message anytime. 😊
-    </p>
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" class="contact-email">wekecenta@gmail.com</a>
-    <div class="contact-socials">
-      <a href="https://www.linkedin.com/in/vincent-wwekesa-56a761174" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a href="https://github.com/WekesaVincent" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-        GitHub
-      </a>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.64l8.073-6.147C21.69 2.28 24 3.434 24 5.457z"/></svg>
-        Gmail
+    <div class="hero__scroll">
+      <a href="#about" aria-label="Scroll down">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
       </a>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div class="footer-brand"><span>wekecenta™</span> — Vincent W. Wekesa</div>
-  <div class="footer-copy">© 2026 WEKECENTA™ · Nairobi, Kenya · All rights reserved.</div>
-</footer>
-<div class="red-accent-line" style="bottom:0;top:auto;"></div>
+  <!-- ===== ABOUT ===== -->
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="about__grid">
+        <div class="about__image">
+          <div class="about__img-wrapper">
+            <img src="images/portfolio.jpg"
+                 alt="Vincent W. Wekesa"
+                 loading="lazy"
+                 onerror="this.src='https://raw.githubusercontent.com/WekesaVincent/Mages/main/portfolio.jpg.jpeg'; this.onerror=null;" />
+            <div class="about__img-fallback">VW</div>
+          </div>
+          <div class="about__badge">
+            <span class="badge-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            <div>
+              <strong>SOC &amp; Data Security Analyst</strong>
+              <span>Cybersecurity Researcher</span>
+            </div>
+          </div>
+        </div>
+        <div class="about__content">
+          <p class="section__label">About Me</p>
+          <h2 class="section__title">Data-Driven. <br><span class="accent">Security-Focused.</span></h2>
+          <p class="about__text">
+            I'm <strong>Vincent W. Wekesa</strong>, an IT and Data Analyst transitioning into Cybersecurity based in Nairobi, Kenya.
+            I combine rigorous analytical thinking with hands-on technical defense to protect critical data,
+            harden systems, and surface threats before adversaries strike.
+          </p>
+          <p class="about__text">
+            Over the past several years, I have built practical expertise across Security Operations,
+            SIEM monitoring, threat detection, incident response fundamentals, access control, and information assurance.
+            My background in <strong>Applied Computer Science and Data Analytics</strong> empowers me to apply
+            machine learning, statistical validation, and behavioral telemetry to modern SOC workflows.
+          </p>
+          <div class="about__tags">
+            <span>SOC Analysis</span>
+            <span>SIEM &amp; Monitoring</span>
+            <span>Threat Detection</span>
+            <span>Incident Response</span>
+            <span>Python</span>
+            <span>R / RStudio</span>
+            <span>SQL &amp; ETL</span>
+            <span>Machine Learning</span>
+            <span>Network Security</span>
+            <span>Risk Management</span>
+            <span>Cloud Security</span>
+          </div>
+          <div class="about__meta">
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" rel="noopener">wekecenta@gmail.com</a>
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Nairobi County, Kenya
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="2.5"/></svg>
+              CompTIA CySA+
+            </span>
+          </div>
+          <a href="#contact" class="btn btn--primary">Work With Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</div><!-- end #cyberBg -->
+  <!-- ===== PROJECTS ===== -->
+  <section class="projects section" id="projects">
+    <div class="container">
+      <p class="section__label">Portfolio</p>
+      <h2 class="section__title">Featured <span class="accent">Projects</span></h2>
 
-<script>
-/* 1. MATRIX RAIN */
-(function(){
-  const c=document.getElementById('matrixCanvas'),ctx=c.getContext('2d');
-  const CH='01∑∂∫√πΔΩアイウエオカキクケコ';
-  let cols,drops,fs=14;
-  function resize(){c.width=window.innerWidth;c.height=window.innerHeight;cols=Math.floor(c.width/fs);drops=Array.from({length:cols},()=>Math.random()*-c.height/fs);}
-  resize();window.addEventListener('resize',resize);
-  function draw(){ctx.fillStyle='rgba(7,13,20,0.055)';ctx.fillRect(0,0,c.width,c.height);for(let i=0;i<cols;i++){const y=drops[i]*fs;ctx.font=`${fs}px 'Share Tech Mono',monospace`;ctx.fillStyle='#ffffff';ctx.fillText(CH[Math.floor(Math.random()*CH.length)],i*fs,y);ctx.fillStyle='#00ff9d';ctx.fillText(CH[Math.floor(Math.random()*CH.length)],i*fs,y-fs);ctx.fillStyle='rgba(0,255,157,0.3)';ctx.fillText(CH[Math.floor(Math.random()*CH.length)],i*fs,y-fs*2);drops[i]++;if(drops[i]*fs>c.height&&Math.random()>0.975)drops[i]=0;}}
-  setInterval(draw,45);
-})();
+      <div class="projects__grid">
 
-/* 2. HERO CANVAS — neural + shooting stars */
-(function(){
-  const c=document.getElementById('heroCanvas'),ctx=c.getContext('2d');
-  let W,H,nodes=[],stars=[];
-  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
-  resize();window.addEventListener('resize',resize);
-  for(let i=0;i<55;i++)nodes.push({x:Math.random()*1400,y:Math.random()*800,vx:(Math.random()-.5)*0.4,vy:(Math.random()-.5)*0.4,r:1.5+Math.random()*2});
-  function newStar(){return{x:Math.random()*W,y:Math.random()*H*0.6,vx:3+Math.random()*5,vy:1.5+Math.random()*3,len:60+Math.random()*80,life:1,decay:0.012+Math.random()*0.01};}
-  for(let i=0;i<6;i++)stars.push(newStar());
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){ctx.strokeStyle=`rgba(0,255,157,${0.12*(1-d/130)})`;ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.stroke();}}
-    nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle='rgba(0,255,157,0.65)';ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,n.r+3,0,Math.PI*2);ctx.fillStyle='rgba(0,255,157,0.08)';ctx.fill();});
-    stars.forEach((s,idx)=>{s.life-=s.decay;if(s.life<=0||s.x>W+100||s.y>H+100){stars[idx]=newStar();return;}const tx=s.x-s.vx*(s.len/s.vx||20),ty=s.y-s.vy*(s.len/s.vx||20);const g=ctx.createLinearGradient(tx,ty,s.x,s.y);g.addColorStop(0,'rgba(0,255,157,0)');g.addColorStop(1,`rgba(0,255,157,${s.life*0.9})`);ctx.strokeStyle=g;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(s.x,s.y);ctx.stroke();ctx.beginPath();ctx.arc(s.x,s.y,2,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${s.life})`;ctx.fill();s.x+=s.vx;s.y+=s.vy;});
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
+        <div class="project-card">
+          <div class="project-card__img-wrap">
+            <img src="images/car.jpg" alt="Car Price Prediction" loading="lazy" onerror="this.src='https://raw.githubusercontent.com/WekesaVincent/Mages/main/car.jpg'" />
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__tag">ML · Regression</span>
+            <h3 class="project-card__title">Car Price Prediction</h3>
+            <p class="project-card__desc">Predicting car prices based on multi-dimensional vehicle attributes using regression models, feature selection, and optimization.</p>
+            <a href="https://github.com/WekesaVincent/Projects/blob/main/Car%20Price%20Prediction.ipynb" target="_blank" rel="noopener" class="project-card__btn">Explore Project →</a>
+          </div>
+        </div>
 
-/* 3. RADAR */
-(function(){
-  const c=document.getElementById('radarCanvas');if(!c)return;
-  const ctx=c.getContext('2d'),CX=100,CY=100,R=90;let angle=0;
-  const blips=Array.from({length:6},()=>({a:Math.random()*Math.PI*2,r:20+Math.random()*65,life:0}));
-  function draw(){
-    ctx.clearRect(0,0,200,200);ctx.beginPath();ctx.arc(CX,CY,R,0,Math.PI*2);ctx.fillStyle='rgba(0,20,15,0.85)';ctx.fill();
-    [0.25,0.5,0.75,1].forEach(f=>{ctx.beginPath();ctx.arc(CX,CY,R*f,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,157,0.18)';ctx.lineWidth=1;ctx.stroke();});
-    ctx.strokeStyle='rgba(0,255,157,0.15)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(CX-R,CY);ctx.lineTo(CX+R,CY);ctx.stroke();ctx.beginPath();ctx.moveTo(CX,CY-R);ctx.lineTo(CX,CY+R);ctx.stroke();
-    for(let i=0;i<60;i++){const a=angle-i*0.03,al=Math.max(0,(60-i)/60)*0.35;ctx.beginPath();ctx.moveTo(CX,CY);ctx.arc(CX,CY,R,a,a+0.03);ctx.closePath();ctx.fillStyle=`rgba(0,255,157,${al})`;ctx.fill();}
-    ctx.strokeStyle='rgba(0,255,157,0.9)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(CX,CY);ctx.lineTo(CX+Math.cos(angle)*R,CY+Math.sin(angle)*R);ctx.stroke();
-    blips.forEach(b=>{const da=((angle%(Math.PI*2))-(b.a%(Math.PI*2))+Math.PI*4)%(Math.PI*2);if(da<0.15)b.life=1;else b.life=Math.max(0,b.life-0.018);if(b.life>0){const bx=CX+Math.cos(b.a)*b.r,by=CY+Math.sin(b.a)*b.r;ctx.beginPath();ctx.arc(bx,by,3,0,Math.PI*2);ctx.fillStyle=`rgba(0,255,157,${b.life})`;ctx.fill();ctx.beginPath();ctx.arc(bx,by,7,0,Math.PI*2);ctx.fillStyle=`rgba(0,255,157,${b.life*0.2})`;ctx.fill();}});
-    ctx.beginPath();ctx.arc(CX,CY,R,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,157,0.4)';ctx.lineWidth=1.5;ctx.stroke();
-    angle+=0.03;requestAnimationFrame(draw);
-  }
-  draw();
-})();
+        <div class="project-card">
+          <div class="project-card__img-wrap">
+            <img src="images/house.png" alt="House Price Prediction" loading="lazy" onerror="this.src='https://raw.githubusercontent.com/WekesaVincent/Mages/main/house.png'" />
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__tag">ML · Regression</span>
+            <h3 class="project-card__title">House Price Prediction</h3>
+            <p class="project-card__desc">Comprehensive valuation model for real-estate decision making built with advanced regression and feature engineering.</p>
+            <a href="https://github.com/WekesaVincent/Projects/blob/main/House%20Price%20Prediction.ipynb" target="_blank" rel="noopener" class="project-card__btn">Explore Project →</a>
+          </div>
+        </div>
 
-/* 4. BINARY CANVAS */
-(function(){
-  const c=document.getElementById('binaryCanvas');if(!c)return;
-  const ctx=c.getContext('2d'),par=document.getElementById('cyberBg');
-  let rows=[];const cW=22,cH=26;
-  function resize(){c.width=par.offsetWidth;c.height=par.offsetHeight;const rc=Math.ceil(c.height/cH),cc=Math.ceil(c.width/cW)+20;rows=[];for(let r=0;r<rc;r++)rows.push({offset:Math.random()*cc,speed:0.15+Math.random()*0.35,bits:Array.from({length:cc},()=>Math.random()>.5?'1':'0'),alpha:0.12+Math.random()*0.2});}
-  resize();window.addEventListener('resize',resize);
-  function draw(){ctx.clearRect(0,0,c.width,c.height);ctx.font=`${cH*0.62}px 'Share Tech Mono',monospace`;rows.forEach((row,ri)=>{row.offset-=row.speed;if(row.offset<-row.bits.length)row.offset=0;ctx.fillStyle=`rgba(0,220,150,${row.alpha})`;row.bits.forEach((bit,ci)=>{const x=(ci+row.offset)*cW;if(x>-cW&&x<c.width+cW){if(Math.random()<0.001)row.bits[ci]=row.bits[ci]==='0'?'1':'0';ctx.fillText(bit,x,(ri+1)*cH);}});});requestAnimationFrame(draw);}
-  draw();
-})();
+        <div class="project-card">
+          <div class="project-card__img-wrap">
+            <img src="images/lung.png" alt="Lung Cancer Disease Prediction" loading="lazy" onerror="this.src='https://raw.githubusercontent.com/WekesaVincent/Mages/main/lung.png'" />
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__tag">ML · Classification</span>
+            <h3 class="project-card__title">Lung Cancer Disease Prediction</h3>
+            <p class="project-card__desc">10 machine learning classification models evaluated with Scikit-learn to determine the highest predictive accuracy for diagnosis.</p>
+            <a href="https://github.com/WekesaVincent/Projects/blob/main/Lung%20Cancer%20Disease%20Prediction.ipynb" target="_blank" rel="noopener" class="project-card__btn">Explore Project →</a>
+          </div>
+        </div>
 
-/* 5. TERMINAL — data + SOC themed sessions */
-(function(){
-  const body=document.getElementById('termBody');if(!body)return;
-  function r(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
-  const SESSIONS=[
-    ()=>[
-      {cls:'cmd', text:'$ python3 model_train.py --data car_prices.csv'},
-      {cls:'info',text:'[*] Loading 10,000 rows × 26 features...'},
-      {cls:'info',text:'[*] Feature engineering in progress...'},
-      {cls:'dim', text:''},
-      {cls:'ok',  text:`[+] XGBoost R²: 0.${r(88,96)} | RMSE: ${r(1200,2400)}`},
-      {cls:'ok',  text:`[+] RandomForest accuracy: ${r(91,97)}%`},
-      {cls:'ok',  text:'[+] Report: car_price_analysis.pdf saved'},
-      {cls:'dim', text:''},
-      {cls:'cmd', text:'$ whoami'},
-      {cls:'ok',  text:'vincent — SOC Analyst | Data Analyst'},
-    ],
-    ()=>[
-      {cls:'cmd', text:'$ soc-monitor --siem elastic --alert-level HIGH'},
-      {cls:'info',text:'[*] Querying Elastic SIEM — last 24h'},
-      {cls:'info',text:`[*] Active alerts: ${r(3,12)} HIGH · ${r(1,4)} CRITICAL`},
-      {cls:'dim', text:''},
-      {cls:'warn',text:`[!] Unusual login — ${r(3,8)} failed attempts from unknown IP`},
-      {cls:'warn',text:'[!] Privilege escalation attempt — T1078'},
-      {cls:'ok',  text:'[+] Incident response playbook triggered'},
-      {cls:'ok',  text:'[+] Account locked · IR team notified'},
-    ],
-    ()=>[
-      {cls:'cmd', text:'$ Rscript sentiment_eda.R --input social_media.csv'},
-      {cls:'info',text:'[*] Libraries: ggplot2, dplyr, tidyr, caret'},
-      {cls:'info',text:`[*] ${r(50,120)}K tweets loaded — scoring sentiment...`},
-      {cls:'dim', text:''},
-      {cls:'ok',  text:`[+] Positive: ${r(40,55)}% | Negative: ${r(20,35)}%`},
-      {cls:'ok',  text:`[+] Top hashtag engagement: ${r(12,40)}K interactions`},
-      {cls:'warn',text:`[!] ${r(3,8)}% records missing engagement data — imputed`},
-      {cls:'ok',  text:'[+] Dashboard exported: sentiment_report.html'},
-    ],
-  ];
-  let si=0,li=0,lines=[],timer=null;
-  function clear(){body.innerHTML='';li=0;}
-  function add(d){const div=document.createElement('div');div.className='term-line '+d.cls;if(!d.text){div.innerHTML='&nbsp;';}else if(d.cls==='cmd'){const m=d.text.match(/^(\$\s)(.*)/);div.innerHTML=m?`<span class="prompt">$</span> ${m[2].replace(/</g,'&lt;')}`:d.text;}else{div.textContent=d.text;}body.appendChild(div);requestAnimationFrame(()=>div.classList.add('show'));body.scrollTop=body.scrollHeight;}
-  function next(){clearTimeout(timer);clear();lines=SESSIONS[si%SESSIONS.length]();si++;li=0;tick();}
-  function tick(){if(li<lines.length){add(lines[li++]);const d=lines[li-1];timer=setTimeout(tick,d.cls==='cmd'?700:d.cls==='dim'?150:360);}else{timer=setTimeout(next,3500);}}
-  setTimeout(next,500);
-})();
+        <div class="project-card">
+          <div class="project-card__img-wrap">
+            <img src="images/social.png" alt="Sentiment Analysis" loading="lazy" onerror="this.src='https://raw.githubusercontent.com/WekesaVincent/Mages/main/social.png'" />
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__tag">NLP · Sentiment</span>
+            <h3 class="project-card__title">Sentiment Analysis: Social Media</h3>
+            <p class="project-card__desc">Analyzing emotional indicators across social platforms, including hashtag trends, user sentiment scores, and engagement correlation.</p>
+            <a href="https://github.com/WekesaVincent/Projects/blob/main/Sentiment%20Analysis%20Social%20Media.ipynb" target="_blank" rel="noopener" class="project-card__btn">Explore Project →</a>
+          </div>
+        </div>
 
-/* 6. NAV */
-(function(){
-  document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
-  document.getElementById('navTalk').addEventListener('click',function(){this.classList.toggle('active');});
-  document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',function(){document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));this.classList.add('active');}));
-  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)document.querySelectorAll('.nav-link').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));}),{threshold:0.35});
-  document.querySelectorAll('section[id]').forEach(s=>obs.observe(s));
-})();
+        <div class="project-card">
+          <div class="project-card__img-wrap">
+            <img src="images/bank.jpg" alt="Bank Customer Segmentation" loading="lazy" onerror="this.src='https://raw.githubusercontent.com/WekesaVincent/Mages/main/bank.jpg'" />
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__tag">ML · Clustering</span>
+            <h3 class="project-card__title">Bank Customer Segmentation</h3>
+            <p class="project-card__desc">Clustering banking clients with KMeans and Affinity Propagation for targeted risk management and marketing strategies.</p>
+            <a href="https://github.com/WekesaVincent/Projects/blob/main/BankCustomerSegmentation.ipynb" target="_blank" rel="noopener" class="project-card__btn">Explore Project →</a>
+          </div>
+        </div>
 
-/* 7. COUNTERS & SKILL BARS */
-const cObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,t=+el.dataset.target;let v=0;const s=t/60;const tick=()=>{v=Math.min(v+s,t);el.textContent=Math.floor(v)+'+';if(v<t)requestAnimationFrame(tick);};tick();cObs.unobserve(el);}),{threshold:0.5});
-document.querySelectorAll('[data-target]').forEach(c=>cObs.observe(c));
-const sObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(!e.isIntersecting)return;e.target.style.width=e.target.dataset.pct+'%';sObs.unobserve(e.target);}),{threshold:0.3});
-document.querySelectorAll('.skill-fill').forEach(f=>sObs.observe(f));
-</script>
+        <div class="project-card" style="border: 1px dashed rgba(0,229,160,0.3); justify-content: center; text-align: center;">
+          <div class="project-card__body" style="align-items: center; justify-content: center;">
+            <div class="project-card__icon-lock">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                <circle cx="12" cy="16" r="1.5"/>
+              </svg>
+            </div>
+            <span class="project-card__tag" style="align-self: center;">SOC · Security Lab</span>
+            <h3 class="project-card__title">SIEM &amp; Threat Detection Lab</h3>
+            <p class="project-card__desc" style="text-align: center;">Active defense telemetry project with Elastic SIEM, Sysmon, and automated alert triage.</p>
+            <span class="timeline__tag current" style="align-self: center;">In Progress</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS ===== -->
+  <section class="stats section" id="stats">
+    <div class="container">
+      <div class="stats__grid">
+        <div class="stats__card" data-count="5" data-suffix="+ yrs">
+          <span class="stats__number" id="stat-0">0</span>
+          <span class="stats__label">Years of Experience</span>
+        </div>
+        <div class="stats__card" data-count="5" data-suffix="+">
+          <span class="stats__number" id="stat-1">0</span>
+          <span class="stats__label">ML Projects Completed</span>
+        </div>
+        <div class="stats__card" data-count="10" data-suffix="+">
+          <span class="stats__number" id="stat-2">0</span>
+          <span class="stats__label">ML Models Evaluated</span>
+        </div>
+        <div class="stats__card" data-count="3" data-suffix="+">
+          <span class="stats__number" id="stat-3">0</span>
+          <span class="stats__label">Professional Roles Held</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE ===== -->
+  <section class="experience section" id="experience">
+    <div class="container">
+      <p class="section__label">Career</p>
+      <h2 class="section__title">Professional <span class="accent">Experience</span></h2>
+      <div class="timeline timeline--grid">
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__card">
+            <div class="timeline__header">
+              <div>
+                <h3>Freelance Data Analyst / IT Analyst</h3>
+                <span class="timeline__org">Freelance / Self-Employed · Remote, Kenya</span>
+              </div>
+              <span class="timeline__tag current">2020 – 2026</span>
+            </div>
+            <p>
+              • Analyzed and transformed datasets using Python, SQL, Excel, and statistical validation.<br>
+              • Designed and optimized database systems, implementing data integrity and security practices.<br>
+              • Applied cybersecurity principles to monitoring, access control, and threat awareness projects.<br>
+              • Completed graduate-level research in ML, data analytics, and cyber defense fundamentals.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__card">
+            <div class="timeline__header">
+              <div>
+                <h3>Census Enumerator</h3>
+                <span class="timeline__org">Kenya National Bureau of Statistics (KNBS) · Kenya</span>
+              </div>
+              <span class="timeline__tag">Aug 2019</span>
+            </div>
+            <p>
+              • Conducted field demographic data collection using digital questionnaires and verification checks.<br>
+              • Performed data quality validation, ensuring accuracy, completeness, and strict confidentiality.<br>
+              • Handled sensitive citizen records adhering to official information governance standards.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__card">
+            <div class="timeline__header">
+              <div>
+                <h3>IT Support Technician</h3>
+                <span class="timeline__org">Trans Nzoia County Assembly · Kitale, Kenya</span>
+              </div>
+              <span class="timeline__tag">2018</span>
+            </div>
+            <p>
+              • Delivered first-line technical support for enterprise hardware, peripherals, and workstation environments.<br>
+              • Installed and configured Windows and Linux systems, resolving TCP/IP and LAN/WAN connectivity issues.<br>
+              • Applied systems administration procedures, updates, and foundational security hygiene.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__card">
+            <div class="timeline__header">
+              <div>
+                <h3>Cybersecurity Fellow</h3>
+                <span class="timeline__org">AfricaHackon · Nairobi, Kenya</span>
+              </div>
+              <span class="timeline__tag current">2026</span>
+            </div>
+            <p>
+              • Active immersion in threat intelligence, network exploitation analysis, and SOC engineering.<br>
+              • Hands-on masterclasses covering threat hunting, API security, and defensive mitigation pipelines.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS / SERVICES ===== -->
+  <section class="skills section" id="skills">
+    <div class="container">
+      <p class="section__label">What I Do</p>
+      <h2 class="section__title">Core <span class="accent">Capabilities</span></h2>
+
+      <div class="skills__grid skills__grid--services">
+
+        <!-- SOC Analysis -->
+        <div class="skill-card">
+          <div class="skill-card__icon skill-card__icon--blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+              <circle cx="12" cy="10" r="2.5"/><path d="M9.5 10H4M14.5 10H20"/>
+            </svg>
+          </div>
+          <h3>SOC Analysis &amp; SIEM</h3>
+          <p>Real-time security telemetry monitoring, log analysis across endpoints and networks, and correlating alerts with Elastic SIEM, Sysmon, and Suricata.</p>
+          <div class="skill-card__tags"><span>SIEM</span><span>Sysmon</span><span>Suricata</span><span>Log Triage</span></div>
+        </div>
+
+        <!-- Threat Detection -->
+        <div class="skill-card">
+          <div class="skill-card__icon skill-card__icon--blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M22 12h-4M6 12H2M12 2v4M12 18v4"/>
+            </svg>
+          </div>
+          <h3>Threat Detection &amp; Hunting</h3>
+          <p>Identifying indicators of compromise (IOCs), mapping adversary tactics with MITRE ATT&amp;CK, and investigating suspicious anomalies across systems.</p>
+          <div class="skill-card__tags"><span>MITRE ATT&amp;CK</span><span>IOCs</span><span>TTPs</span><span>EDR</span></div>
+        </div>
+
+        <!-- Incident Response -->
+        <div class="skill-card">
+          <div class="skill-card__icon skill-card__icon--blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="7" y="7" width="10" height="10" rx="1"/>
+              <path d="M7 10H3M7 14H3M17 10h4M17 14h4M10 7V3M14 7V3M10 17v4M14 17v4"/>
+            </svg>
+          </div>
+          <h3>Incident Response</h3>
+          <p>Structured incident lifecycle execution: alert triage, host isolation, artifact preservation, and root-cause post-incident reporting.</p>
+          <div class="skill-card__tags"><span>Playbooks</span><span>Containment</span><span>Forensics</span><span>Remediation</span></div>
+        </div>
+
+        <!-- Data Analytics -->
+        <div class="skill-card">
+          <div class="skill-card__icon skill-card__icon--blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              <path d="M2 12h20"/>
+            </svg>
+          </div>
+          <h3>Data Analytics &amp; ML</h3>
+          <p>End-to-end data processing with Python, R, and SQL to build regression, classification, and clustering pipelines for actionable predictive intelligence.</p>
+          <div class="skill-card__tags"><span>Python</span><span>RStudio</span><span>SQL</span><span>Scikit-Learn</span></div>
+        </div>
+
+        <!-- Network Security -->
+        <div class="skill-card">
+          <div class="skill-card__icon skill-card__icon--blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              <circle cx="12" cy="16" r="1.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <h3>Network &amp; Access Defense</h3>
+          <p>Defending network perimeters, analyzing TCP/IP packets, managing firewall access control, and enforcing identity &amp; access management (IAM).</p>
+          <div class="skill-card__tags"><span>TCP/IP</span><span>Wireshark</span><span>IAM</span><span>Firewalls</span></div>
+        </div>
+
+        <!-- Risk Management -->
+        <div class="skill-card">
+          <div class="skill-card__icon skill-card__icon--blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <path d="m8.59 13.51 6.83 3.98M15.41 10.5 8.59 6.52"/>
+            </svg>
+          </div>
+          <h3>Risk &amp; Information Assurance</h3>
+          <p>Evaluating organizational threat posture, identifying vulnerability exposure, ensuring compliance standards, and establishing defensive controls.</p>
+          <div class="skill-card__tags"><span>CySA+</span><span>Compliance</span><span>Risk Matrix</span><span>Auditing</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CERTIFICATIONS & EDUCATION ===== -->
+  <section class="certs section" id="certifications">
+    <div class="container">
+      <p class="section__label">Credentials</p>
+      <h2 class="section__title">Certifications &amp; <span class="accent">Education</span></h2>
+
+      <div class="certs__layout">
+        <div>
+          <h3 class="certs__col-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            Professional Certifications
+          </h3>
+
+          <div class="cert-group">
+            <span class="cert-issuer">CompTIA</span>
+            <div class="cert-list">
+              <span class="cert-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                CompTIA CySA+ CS0-003 (Cybersecurity Analyst)
+              </span>
+            </div>
+          </div>
+
+          <div class="cert-group">
+            <span class="cert-issuer">AfricaHackon</span>
+            <div class="cert-list">
+              <span class="cert-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                Cybersecurity Fundamentals &amp; Advanced Techniques
+              </span>
+            </div>
+          </div>
+
+          <div class="cert-group">
+            <span class="cert-issuer">Ajira Digital</span>
+            <div class="cert-list">
+              <span class="cert-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                Data Management &amp; Information Sciences
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="certs__col-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            Academic Education
+          </h3>
+
+          <div class="edu-card">
+            <div class="edu-card__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <div>
+              <strong>BSc. Applied Computer Science</strong>
+              <span>Kisii University, Kenya</span>
+              <em>2015 – 2019 · Degree Conferred</em>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Cybersecurity Masterclass</strong>
+              <span>AfricaHackon</span>
+              <em>Feb 2026 – Aug 2026 · In Progress</em>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+                <line x1="2" y1="20" x2="22" y2="20"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Data Sciences Support</strong>
+              <span>Ajira.com Platform</span>
+              <em>Completed</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <div class="contact__info">
+          <p class="section__label">Get in Touch</p>
+          <h2 class="section__title">Ready to <span class="accent">Collaborate</span><br>on Security &amp; Data?</h2>
+          <p class="contact__text">
+            I'm always excited to connect, whether you're looking for an aspiring SOC Analyst,
+            collaborating on data &amp; security projects, or discussing modern threat detection.
+          </p>
+          <div class="contact__details">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" rel="noopener" class="btn btn--primary contact__mailto">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <span>wekecenta@gmail.com</span>
+            </a>
+          </div>
+          <div class="contact__socials">
+            <a href="https://www.linkedin.com/in/vincent-wwekesa-56a761174" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://github.com/WekesaVincent" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=wekecenta@gmail.com" target="_blank" rel="noopener" aria-label="Gmail">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.64l8.073-6.147C21.69 2.28 24 3.434 24 5.457z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="nav__logo">wekecenta<span>™</span></span>
+        <p>© 2026 Vincent W. Wekesa · Nairobi, Kenya. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#home" class="scroll-top" id="scroll-top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+  </a>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
