@@ -27,6 +27,7 @@
         <li><a href="#projects">Projects</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#labs">Lab Challenges</a></li>
         <li><a href="#contact" class="nav__cta">Let's Talk</a></li>
       </ul>
       <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu">
@@ -588,7 +589,240 @@
     </div>
   </section>
 
+  <!-- ===== LAB CHALLENGES ===== -->
+  <section class="labs section" id="labs">
+    <div class="container">
+      <p class="section__label">CTF &amp; Labs</p>
+      <h2 class="section__title">Lab <span class="accent">Challenges</span></h2>
+
+      <div class="labs__grid">
+
+        <!-- Challenge 1: Network Traffic Analysis -->
+        <div class="lab-card">
+          <div class="lab-card__header">
+            <div class="lab-card__meta">
+              <span class="lab-card__platform lab-card__platform--cyberdefenders">CyberDefenders</span>
+              <span class="lab-card__difficulty lab-card__difficulty--medium">Medium</span>
+            </div>
+            <span class="lab-card__status">Completed</span>
+          </div>
+          <h3 class="lab-card__title">Network Traffic Analysis — C2 Beacon Detection</h3>
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Problem Statement
+          </p>
+          <p class="lab-card__text">A suspicious PCAP file was captured from an endpoint flagged by the EDR. The task was to identify whether the host was communicating with a Command &amp; Control (C2) server, extract IOCs, and determine the malware family based on traffic patterns.</p>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            Approach
+          </p>
+          <ul class="lab-card__steps">
+            <li><span class="step-num">01</span> Opened PCAP in Wireshark and applied display filters to isolate HTTP/HTTPS and DNS traffic</li>
+            <li><span class="step-num">02</span> Identified periodic beaconing at consistent 60-second intervals to a suspicious IP address</li>
+            <li><span class="step-num">03</span> Extracted DNS queries revealing domain generation algorithm (DGA) patterns</li>
+            <li><span class="step-num">04</span> Used VirusTotal and AbuseIPDB to confirm the C2 IP as malicious (Cobalt Strike beacon)</li>
+            <li><span class="step-num">05</span> Documented all IOCs: IPs, domains, JA3 hashes, and User-Agent strings</li>
+          </ul>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            Tools Used
+          </p>
+          <div class="lab-card__tools">
+            <span>Wireshark</span><span>NetworkMiner</span><span>VirusTotal</span><span>AbuseIPDB</span><span>Zeek</span><span>tshark</span>
+          </div>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Key Lessons Learned
+          </p>
+          <ul class="lab-card__lessons">
+            <li>Beaconing traffic has predictable timing patterns detectable via statistical analysis</li>
+            <li>JA3/JA3S fingerprints are reliable indicators of specific malware families</li>
+            <li>DNS query volume spikes often indicate DGA-based C2 communication</li>
+            <li>Always correlate multiple data sources before attributing a threat</li>
+          </ul>
+        </div>
+
+        <!-- Challenge 2: SIEM Alert Triage -->
+        <div class="lab-card">
+          <div class="lab-card__header">
+            <div class="lab-card__meta">
+              <span class="lab-card__platform lab-card__platform--africahackon">AfricaHackon</span>
+              <span class="lab-card__difficulty lab-card__difficulty--medium">Medium</span>
+            </div>
+            <span class="lab-card__status">Completed</span>
+          </div>
+          <h3 class="lab-card__title">SIEM Alert Triage — Identifying True Positives in Elastic SIEM</h3>
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Problem Statement
+          </p>
+          <p class="lab-card__text">Given a pre-configured Elastic SIEM environment with 80+ triggered alerts from a simulated attack scenario (lateral movement + privilege escalation), the task was to triage alerts, separate true positives from false positives, and reconstruct the attack timeline.</p>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            Approach
+          </p>
+          <ul class="lab-card__steps">
+            <li><span class="step-num">01</span> Prioritized alerts by severity (Critical &gt; High &gt; Medium) and grouped by host and user</li>
+            <li><span class="step-num">02</span> Correlated Sysmon Event IDs (1, 3, 7, 11, 13) to trace process execution chains</li>
+            <li><span class="step-num">03</span> Identified anomalous PowerShell execution with encoded commands — confirmed credential dumping attempt</li>
+            <li><span class="step-num">04</span> Mapped activity to MITRE ATT&amp;CK: T1059.001 (PowerShell), T1003 (OS Credential Dumping), T1021 (Lateral Movement)</li>
+            <li><span class="step-num">05</span> Created a timeline report documenting the full attack chain from initial access to exfiltration attempt</li>
+          </ul>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            Tools Used
+          </p>
+          <div class="lab-card__tools">
+            <span>Elastic SIEM</span><span>Sysmon</span><span>KQL</span><span>MITRE ATT&amp;CK Navigator</span><span>Sigma Rules</span>
+          </div>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Key Lessons Learned
+          </p>
+          <ul class="lab-card__lessons">
+            <li>Alert correlation across multiple Event IDs is essential to reconstruct kill chains</li>
+            <li>Encoded PowerShell commands are a strong indicator of malicious intent and should auto-escalate</li>
+            <li>MITRE ATT&amp;CK mapping accelerates triage by providing context for observed TTPs</li>
+            <li>SOC analysts must balance thoroughness with speed — prioritization frameworks are critical</li>
+          </ul>
+        </div>
+
+        <!-- Challenge 3: Web App Vulnerability Assessment -->
+        <div class="lab-card">
+          <div class="lab-card__header">
+            <div class="lab-card__meta">
+              <span class="lab-card__platform lab-card__platform--tryhackme">TryHackMe</span>
+              <span class="lab-card__difficulty lab-card__difficulty--easy">Easy</span>
+            </div>
+            <span class="lab-card__status">Completed</span>
+          </div>
+          <h3 class="lab-card__title">OWASP Top 10 — Web Application Vulnerability Assessment</h3>
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Problem Statement
+          </p>
+          <p class="lab-card__text">A deliberately vulnerable web application (DVWA / Juice Shop) was provided. The objective was to identify and exploit OWASP Top 10 vulnerabilities — including SQL injection, broken authentication, and XSS — and produce a structured vulnerability report with remediation recommendations.</p>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            Approach
+          </p>
+          <ul class="lab-card__steps">
+            <li><span class="step-num">01</span> Performed reconnaissance: directory enumeration and technology fingerprinting with Gobuster and Wappalyzer</li>
+            <li><span class="step-num">02</span> Intercepted and modified HTTP requests using Burp Suite to test input validation controls</li>
+            <li><span class="step-num">03</span> Exploited SQL injection on the login form to bypass authentication — extracted database schema with SQLmap</li>
+            <li><span class="step-num">04</span> Injected stored XSS payload via user profile field, demonstrating session hijacking risk</li>
+            <li><span class="step-num">05</span> Documented findings in a CVSS-scored vulnerability report with PoC and remediation steps</li>
+          </ul>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            Tools Used
+          </p>
+          <div class="lab-card__tools">
+            <span>Burp Suite</span><span>SQLmap</span><span>Gobuster</span><span>OWASP ZAP</span><span>Wappalyzer</span><span>Nikto</span>
+          </div>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Key Lessons Learned
+          </p>
+          <ul class="lab-card__lessons">
+            <li>Parameterized queries and prepared statements completely eliminate SQL injection risk</li>
+            <li>Content Security Policy (CSP) headers are the primary defense against XSS attacks</li>
+            <li>Broken access control is the #1 OWASP risk — server-side authorization checks are non-negotiable</li>
+            <li>Structured vulnerability reporting with CVSS scoring is essential for risk prioritization</li>
+          </ul>
+        </div>
+
+        <!-- Challenge 4: Malware Analysis -->
+        <div class="lab-card">
+          <div class="lab-card__header">
+            <div class="lab-card__meta">
+              <span class="lab-card__platform lab-card__platform--africahackon">AfricaHackon</span>
+              <span class="lab-card__difficulty lab-card__difficulty--hard">Hard</span>
+            </div>
+            <span class="lab-card__status">Completed</span>
+          </div>
+          <h3 class="lab-card__title">Static &amp; Dynamic Malware Analysis — Suspicious PE Binary</h3>
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Problem Statement
+          </p>
+          <p class="lab-card__text">A suspicious Windows PE binary was submitted from an employee workstation after unusual outbound traffic was detected. The task was to perform both static and dynamic analysis to determine the malware's capabilities, persistence mechanisms, and network IOCs — without executing it on a live network.</p>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            Approach
+          </p>
+          <ul class="lab-card__steps">
+            <li><span class="step-num">01</span> Calculated file hashes (MD5, SHA256) and submitted to VirusTotal — 34/72 engines flagged as trojan</li>
+            <li><span class="step-num">02</span> Static analysis with PEStudio: identified suspicious imports (VirtualAlloc, WriteProcessMemory), packed sections, and embedded strings</li>
+            <li><span class="step-num">03</span> Decompiled binary in Ghidra to identify obfuscated string decryption routine and C2 URL construction logic</li>
+            <li><span class="step-num">04</span> Executed in isolated FlareVM sandbox: monitored registry, file system, and network activity with Regshot and Process Monitor</li>
+            <li><span class="step-num">05</span> Confirmed persistence via Run key modification and identified C2 callback to hardcoded IP over port 4444</li>
+          </ul>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            Tools Used
+          </p>
+          <div class="lab-card__tools">
+            <span>PEStudio</span><span>Ghidra</span><span>VirusTotal</span><span>Process Monitor</span><span>Regshot</span><span>FlareVM</span><span>Wireshark</span>
+          </div>
+
+          <hr class="lab-card__divider">
+
+          <p class="lab-card__section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Key Lessons Learned
+          </p>
+          <ul class="lab-card__lessons">
+            <li>Static analysis alone is insufficient — dynamic execution reveals obfuscated behavior not visible in code</li>
+            <li>Registry Run keys and scheduled tasks are the most common Windows persistence mechanisms</li>
+            <li>Isolating the sandbox from the network is critical to prevent live C2 communication during analysis</li>
+            <li>String decryption routines in Ghidra can expose hardcoded IOCs that AV signatures may miss</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ===== CONTACT ===== -->
+
   <section class="contact section" id="contact">
     <div class="container">
       <div class="contact__inner">
