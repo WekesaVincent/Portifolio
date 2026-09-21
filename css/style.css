@@ -45,7 +45,10 @@ ul { list-style: none; }
   padding: 0 24px;
 }
 
-.section { padding: 100px 0; }
+.section { padding: 80px 0; }
+
+.about.section { padding-bottom: 48px; }
+
 
 .accent { color: var(--accent); }
 
