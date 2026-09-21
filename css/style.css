@@ -1783,3 +1783,53 @@ ul { list-style: none; }
   .labs__grid { grid-template-columns: 1fr; }
 }
 
+.lab-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lab-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 229, 160, 0.35);
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: var(--accent-glow);
+  transition: var(--transition);
+}
+
+.lab-card__link:hover {
+  background: rgba(0, 229, 160, 0.25);
+  border-color: var(--accent);
+  box-shadow: 0 0 14px rgba(0, 229, 160, 0.2);
+  transform: translateY(-1px);
+}
+
+.lab-card__link svg {
+  stroke: var(--accent);
+  flex-shrink: 0;
+}
+
+.lab-card__solved {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lab-card__solved svg { stroke: #4ade80; }
